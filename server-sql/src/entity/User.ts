@@ -1,5 +1,7 @@
 // import { report } from "process"
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from "typeorm"
+import { Message } from "./Message"
+import { Chat } from "./Chat"
 
 export enum UserRole {
     ADMIN = 'admin',
@@ -42,8 +44,8 @@ export class User extends BaseEntity {
     @Column({default: false})
     isBlocked: boolean
 
-    // @OneToMany(()=> Message, (message) => message.sender)
-    // messages: Message[]
+    @OneToMany(()=> Message, (message) => message.sender)
+    messages: Message[]
 
     // @OneToMany(()=> Report, (report)=> report.sender)
     // sentReports: Report[]
@@ -54,7 +56,7 @@ export class User extends BaseEntity {
     // @OneToMany(()=> Report, (report)=> report.moderator)
     // managedReports: Report[]
 
-    // @OneToMany(()=> Chat, (chat)=> chat.moderator)
-    // ownedGroups: Chat[]
+    @OneToMany(()=> Chat, (chat)=> chat.owner)
+    ownedGroups: Chat[]
 
 }
