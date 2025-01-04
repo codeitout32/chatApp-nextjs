@@ -6,11 +6,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { useDispatch } from 'react-redux'
 import { useAppDispatch, useAppSelector } from '../lib/reduxHooks';
 import { increment } from '../lib/slices/counterSlice';
+import { authServiceApi } from '../lib/services/auth';
 
 const LoginPage = () => {
 
     const [isSignUp, setIsSignUp] = useState(false)
     const dispatch = useAppDispatch()
+ const [startSignIn, result] = authServiceApi.useSignInUserMutation()
 
     const toggleIsSignUp = () => setIsSignUp(!isSignUp)
     const count = useAppSelector(state => state.counter.value)
@@ -26,8 +28,12 @@ const LoginPage = () => {
             // if (!action.payload.token) return null
             // localStorage.setItem('userData', JSON.stringify(action.payload))
             console.log('em pass', email, password)
+            startSignIn({email, password})
         }
     }
+
+    console.log('results', result);
+    
   return (
     <Container component={'main'} maxWidth="xs">
 

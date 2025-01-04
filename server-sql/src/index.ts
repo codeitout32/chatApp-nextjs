@@ -4,9 +4,11 @@ import usersRouter from '../src/routes/users'
 import errorHandler from "./middleware/errorHandler"
 
 const express = require('express')
+var cors = require('cors')
 const app = express()
 const port = 3100
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
