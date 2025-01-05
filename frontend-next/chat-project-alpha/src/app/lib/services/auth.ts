@@ -1,7 +1,10 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { makeStore } from '../store'
+import { signIn } from '../slices/authSlice'
 
 type AuthResponse=  {
+    token?: string
     data: any
 }
 
@@ -18,8 +21,25 @@ export const authServiceApi = createApi({
     signInUser: builder.mutation<AuthResponse, any>({
         query: body => ({url: `users/signIn`,
      method: 'POST',
-     body
-    })
+     body,
+    
+     
+    }),
+    onQueryStarted: async (args, options ) => {
+      console.log('authresponse',args);
+      // makeStore.
+      try {
+        const res = await options.queryFulfilled
+        console.log('auth reponse', res.data);
+        options.dispatch(signIn(res.data?.token))
+      } catch (error) {
+        console.log('error', error);
+        
+      }
+    
+     
+    }
+    
     })
   }),
 })

@@ -17,10 +17,15 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     signIn: (state, action: PayloadAction<any>) => {
+      localStorage.setItem('userData', action.payload)
       state.userData = action.payload
     },
     decrement: state => {
       state.userData -= 1
+    },
+    signOut: state => {
+      state.userData = null
+      localStorage.clear()
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
     // incrementByAmount: (state, action: PayloadAction<number>) => {
