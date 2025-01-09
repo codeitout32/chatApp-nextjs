@@ -15,6 +15,8 @@ import { useAppDispatch, useAppSelector } from "../lib/reduxHooks";
 import { increment } from "../lib/slices/counterSlice";
 import { authServiceApi } from "../lib/services/auth";
 import { signIn } from "../lib/slices/authSlice";
+import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -22,6 +24,10 @@ const LoginPage = () => {
   const [startSignIn, result] = authServiceApi.useSignInUserMutation();
   const count = useAppSelector((state) => state.counter.value);
   const redixResult = useAppSelector((state) => state);
+  const authStore = useAppSelector(state => state.auth)
+  const router =useRouter()
+  // const tokenData = jwtDecode(authStore.userData || '')
+
 
   const toggleIsSignUp = () => setIsSignUp(!isSignUp);
   const handleSubmit = async (event: any) => {
@@ -42,13 +48,10 @@ const LoginPage = () => {
   console.log("results", result,redixResult);
 
   useEffect(() => {
-    // dispatch(
 
-    //     signIn('data')
-    // )
-  
+  if(authStore.userData) router.push('/userPage')
 
-  }, [])
+  }, [authStore.userData])
   
 
   return (

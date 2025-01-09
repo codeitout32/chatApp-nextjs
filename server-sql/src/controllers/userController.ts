@@ -89,3 +89,7 @@ export const signIn = async (req:Request, res: Response, next) => {
         next(error)
     }
 }
+
+export const validateUser =async (req:Request, res: Response, next) => {
+    res.status(200).json({isValid: req.body.role == req.user.role})
+}
