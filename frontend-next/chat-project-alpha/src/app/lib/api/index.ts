@@ -16,3 +16,4 @@ API.interceptors.request.use((req) => {
 })
 
 export const signIn = (userData: any) => API.post('users/signIn', userData)
+export const validateUser = (userData: any) => API.post('/users/validateUser', userData)

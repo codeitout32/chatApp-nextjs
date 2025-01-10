@@ -27,6 +27,9 @@ export const authSlice = createSlice({
       state.userData = null
       localStorage.clear()
     },
+    autoSignIn: state => {
+     state.userData = localStorage.getItem('userData')
+    },
     // Use the PayloadAction type to declare the contents of `action.payload`
     // incrementByAmount: (state, action: PayloadAction<number>) => {
     //   state.value += action.payload
@@ -34,7 +37,7 @@ export const authSlice = createSlice({
   }
 })
 
-export const {  decrement, signIn } = authSlice.actions
+export const {  decrement, signIn, signOut, autoSignIn } = authSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.auth.userData
