@@ -90,6 +90,16 @@ export const signIn = async (req:Request, res: Response, next) => {
     }
 }
 
+export const getCurrentUser =async (req:Request,res: Response, next) => {
+    const name = getFullName(req.user)
+    res.status(200).json({
+        name,
+        ...req.user
+    })
+}
+
 export const validateUser =async (req:Request, res: Response, next) => {
-    res.status(200).json({isValid: req.body.role == req.user.role})
+    // console.log('validate body', req.body, req.user);
+    
+    res.status(200).json({isValid: true})
 }

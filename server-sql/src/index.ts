@@ -1,11 +1,18 @@
 import { AppDataSource } from "./data-source"
 import { User } from "./entity/User"
+
 import usersRouter from '../src/routes/users'
+import chatsRouter from '../src/routes/chats'
 import errorHandler from "./middleware/errorHandler"
+import { Server } from "socket.io"
+import initializeSocket from "./config/socket"
 
 const express = require('express')
+const http = require('http')
 var cors = require('cors')
 const app = express()
+const httpServer = http.createServer(app)
+// const io = new Server(httpServer,{})
 const port = 3100
 
 app.use(cors())
@@ -13,6 +20,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use('/users', usersRouter)
+app.use('/chats', chatsRouter)
 
 app.get('/', async (req, res) => {
     // res.send('Hello World!')
@@ -21,11 +29,13 @@ app.get('/', async (req, res) => {
     res.send('users' + users.map(o => JSON.stringify(o)).join('<br>'))
   })
 
-app.listen(port, () => {
+  httpServer.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   })
 
 app.use(errorHandler)
+
+initializeSocket(httpServer)
 
 AppDataSource.initialize().then(async () => {
 

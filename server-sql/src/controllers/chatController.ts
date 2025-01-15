@@ -2,8 +2,13 @@ import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { Chat, ChatType } from "../entity/Chat";
 import { getFullName } from "../utils";
+import ApiError from "../types/ApiError";
+import { User, UserRole } from "../entity/User";
 
-export const getChats = async (req: Request, res: Response) => {
+export const getChats = async (req: Request, res: Response, next) => {
+  try {
+    
+
   const user = req.body.user;
 
   const chats = await AppDataSource.getRepository(Chat)
@@ -49,4 +54,65 @@ export const getChats = async (req: Request, res: Response) => {
     });
 
   res.status(200).json(chatsData);
+
+} catch (error) {
+  next(error)
+}
+};
+
+
+export const createPrivateChat =async  (req: Request, res: Response, next) => {
+  try {
+    
+  
+  const creator = req.user;
+  const {email} = req.body
+
+  
+
+  if(!email) throw ApiError.badRequest('Request  data incomplete')
+
+  if(email === creator.email) throw ApiError.methodNotAllowed('Cannot create a chat with your own account')
+  
+  
+  
+  const otherUser = await User.findOneBy({email})
+  if(!otherUser) throw ApiError.notFound('User not found')
+  console.log('create private chat', email, creator );
+  if (otherUser.role !== UserRole.USER)
+  throw ApiError.methodNotAllowed('Creating such chat is not allowed')  
+  
+  const chats = await AppDataSource.getRepository(Chat)
+    .createQueryBuilder("chats")
+    .innerJoinAndSelect("chats.members", "members")
+  .where("chats.type = 'private'")
+    .getMany();
+
+    const doesChatExist = chats.find((chat) => chat.members.find((member) => member.id == creator.id) && chat.members.find(member => member.id === otherUser.id))
+
+    if(doesChatExist) throw ApiError.methodNotAllowed('Chat already exists')
+
+    const newChat = new Chat()
+    newChat.members = [creator, otherUser]
+    newChat.type = ChatType.PRIVATE
+    await newChat.save()
+
+    const newChatData = {
+      id: newChat.id,
+      ownerId: null,
+      name: null,
+      type: newChat.type,
+      members: newChat.members.map(member => {
+        return {id: member.id, name: getFullName(member)}
+      }),
+      messages: [],
+      createdAt: newChat.createdAt
+    }
+  
+
+  res.status(200).json(newChatData);
+
+} catch (error) {
+ next(error)   
+}
 };
