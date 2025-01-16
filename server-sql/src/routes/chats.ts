@@ -4,7 +4,7 @@ import { auth } from "../middleware/auth"
 
 const router = express.Router()
 
-router.get('/', getChats)
+router.get('/',auth, getChats)
 
 router.post('/private', auth, createPrivateChat)
 

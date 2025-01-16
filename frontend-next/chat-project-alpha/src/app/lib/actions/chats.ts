@@ -1,5 +1,6 @@
 
 import * as api from '../api'
+import { ISocketContext } from '../context/Socket';
     import { chatsSlice } from '../slices/chatSlice';
 
 export const createPrivateChat = async (payload: {email: string; socket: any}, dispatch: any) => {
@@ -14,12 +15,25 @@ export const createPrivateChat = async (payload: {email: string; socket: any}, d
 export const getChats = async (dispatch: any) => {
     try {
         const { data: chats} = await api.getChats()
+        console.log('getchats actions', chats)
         // chat.members.map(member => payload.socket.createChat(member.id))
-        dispatch(chatsSlice.actions.createPrivateChat(chats))
+        dispatch(chatsSlice.actions.fetchChats(chats))
     } catch (error) {
         
     }
 } 
+
+export const sendMessage =async (dispatch:any, payload: {message: string, socket: ISocketContext, chatId: string}) => {
+    try {
+        const { data: message} = await api.createMessage(payload.chatId, payload.message)
+        // console.log('getchats actions', chats)
+        payload.socket.sendMessage(payload.chatId, payload.message)
+        // chat.members.map(member => payload.socket.createChat(member.id))
+        dispatch(chatsSlice.actions.sendMesage({message: payload.chatId, chatId: payload.message}))
+    } catch (error) {
+        
+    }
+}
 // export const receiveMessage = async (payload: {chatId: string, message: string} ,dispatch: any) => {
 //     try {
 //         // const { data: chats} = await api.receiveMessage()

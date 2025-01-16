@@ -3,7 +3,7 @@ import ApiError from "../types/ApiError";
 
 const errorHandler = (error:Error, req: Request, res: Response, next: NextFunction) => {
 
-    console.log('error handler started');
+    console.log('error handler started', error.message);
     
     if( error instanceof ApiError ) {
         return res.status(error.code).json({code: error.code, error: error.message})

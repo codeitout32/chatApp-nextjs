@@ -6,8 +6,17 @@ import { recieveMessage } from "../slices/chatSlice";
 
 
 
+export type ISocketContext = {
+    subscribeChats: (userId: any) => void;
+    deleteChat: (userId: any) => void;
+    addMember: (userId: any) => void; 
+    leaveGroup: (userId: any) => void; 
+    subscribeChatMessages: (userId: any) => void;
+    unSubscribeChatMessages: (userId: any) => void;
+    sendMessage: (chatId: any, message: any) => void;
+  };
 
- export const SocketContext = createContext<any>(null)
+ export const SocketContext = createContext<ISocketContext>(null)
 
 const SocketProvider = ({children}) => {
 

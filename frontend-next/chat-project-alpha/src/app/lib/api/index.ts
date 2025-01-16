@@ -32,3 +32,5 @@ export const createPrivateChat = (email: string) => API.post('/chats/private',{e
 export const getChats = () => API.get('/chats')
 // export const receiveMessage = () => API.get('/chats')
 
+export const createMessage = (chatId: string, text: string) => API.post(`/chats/${chatId}`, {text})
+

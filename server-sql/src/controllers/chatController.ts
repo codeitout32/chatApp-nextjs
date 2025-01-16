@@ -9,7 +9,7 @@ export const getChats = async (req: Request, res: Response, next) => {
   try {
     
 
-  const user = req.body.user;
+  const user = req.user;
 
   const chats = await AppDataSource.getRepository(Chat)
     .createQueryBuilder("chats")

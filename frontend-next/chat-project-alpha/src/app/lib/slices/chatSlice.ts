@@ -18,7 +18,21 @@ export const chatsSlice = createSlice({
     },
    
     fetchChats : (chats, action: PayloadAction<any>) => {
-      chats = action.payload
+      // console.log('chat slice', action.payload);
+      
+      chats = [...action.payload]
+
+      return chats
+    },
+
+    sendMesage: (chats, action: PayloadAction<any>) => {
+      chats = chats.map(chat => {
+        if(chat.id === action.payload.chatId ) {
+          chat.messages.push(action.payload.message)
+          chat.recentMessage = action.payload.message
+        }
+        return chat
+      })
     },
 
     recieveMessage: (chats, action: PayloadAction<any>) => {
