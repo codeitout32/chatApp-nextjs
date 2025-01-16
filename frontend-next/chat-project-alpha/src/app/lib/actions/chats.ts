@@ -25,12 +25,13 @@ export const getChats = async (dispatch: any) => {
 
 export const sendMessage =async (dispatch:any, payload: {message: string, socket: ISocketContext, chatId: string}) => {
     try {
-        const { data: message} = await api.createMessage(payload.chatId, payload.message)
+        const { data: text} = await api.createMessage(payload.chatId, payload.message)
         // console.log('getchats actions', chats)
-        payload.socket.sendMessage(payload.chatId, payload.message)
+        payload.socket.sendMessage(payload.chatId, text)
         // chat.members.map(member => payload.socket.createChat(member.id))
-        dispatch(chatsSlice.actions.sendMesage({message: payload.chatId, chatId: payload.message}))
+        dispatch(chatsSlice.actions.sendMesage({message: text, chatId: payload.chatId}))
     } catch (error) {
+        console.log('chat action error', error);
         
     }
 }

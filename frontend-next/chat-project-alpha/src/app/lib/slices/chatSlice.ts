@@ -26,6 +26,7 @@ export const chatsSlice = createSlice({
     },
 
     sendMesage: (chats, action: PayloadAction<any>) => {
+      console.log('from chat slice', chats);
       chats = chats.map(chat => {
         if(chat.id === action.payload.chatId ) {
           chat.messages.push(action.payload.message)
@@ -33,6 +34,7 @@ export const chatsSlice = createSlice({
         }
         return chat
       })
+      
     },
 
     recieveMessage: (chats, action: PayloadAction<any>) => {

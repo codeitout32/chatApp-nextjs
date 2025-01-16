@@ -10,7 +10,7 @@ import { getChats } from "../../actions/chats";
 import Messages from "./Messages";
 import Sendbox from "./SendBox";
 
-const Chat = ({ params }) => {
+const Chat = () => {
   const [chat, setChat] = React.useState(null);
   const socket = useContext(SocketContext);
   const chats = useAppSelector((state) => state.chats);
@@ -32,7 +32,7 @@ const Chat = ({ params }) => {
     getChats(dispatch);
   });
 
-  console.log("chat selected", chat, "params", params);
+  console.log("chat selected", chat, );
 
   if (chat)
     return (

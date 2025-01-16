@@ -4,6 +4,7 @@ import { Chat, ChatType } from "../entity/Chat";
 import { getFullName } from "../utils";
 import ApiError from "../types/ApiError";
 import { User, UserRole } from "../entity/User";
+import { Message } from "../entity/Message";
 
 export const getChats = async (req: Request, res: Response, next) => {
   try {
@@ -111,6 +112,55 @@ export const createPrivateChat =async  (req: Request, res: Response, next) => {
   
 
   res.status(200).json(newChatData);
+
+} catch (error) {
+ next(error)   
+}
+};
+export const createMessage =async  (req: Request, res: Response, next) => {
+  try {
+    
+  
+  const user = req.user;
+  const {text} = req.body
+  const {chatId} = req.params
+
+  
+
+  if(!chatId || !text) throw ApiError.badRequest('Request  data incomplete')
+  if(!parseInt(chatId)) throw ApiError.badRequest('Invalid Chat id')
+
+  const chat = await AppDataSource.getRepository(Chat)
+  .createQueryBuilder("chats")
+  .innerJoinAndSelect("chats.members", "members")
+.where("chats.id = :chatId", {chatId})
+  .getOne();
+
+
+  if(!chat) throw ApiError.methodNotAllowed('Chat not found')
+  
+  const isMember = chat.members.find(member => member.id == user.id)
+  if(!isMember) throw ApiError.forbidden('User is not a chat member')
+
+  const newMessage = new Message()
+  newMessage.sender = user
+  newMessage.chat = chat
+  newMessage.text = text
+  await newMessage.save()
+  
+  chat.recentMessage = newMessage
+  await chat.save()
+
+  const newMessageDate = {
+    id: newMessage.id,
+    text: newMessage.text,
+    createdAt: newMessage.createdAt,
+    sender: {
+      id: newMessage.sender.id,
+      name: getFullName(newMessage.sender)
+    }
+  }
+  res.status(200).json(newMessageDate);
 
 } catch (error) {
  next(error)   
