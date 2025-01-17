@@ -17,6 +17,7 @@ const Messages = ({ chat }) => {
           key={uuidv4()}
           p={1}
           sx={{
+           
             position: "relative",
             display: "flex",
             flexDirection: "column",
@@ -59,7 +60,9 @@ const Messages = ({ chat }) => {
       );
     });
   return (
-    <Box display={"flex"} flexDirection={"column-reverse"} flex={1}>
+    <Box display={"flex"} flexDirection={"column-reverse"} sx={{
+      overflowY: 'scroll'
+    }} flex={1}>
       {messageBoxes}
     </Box>
   );

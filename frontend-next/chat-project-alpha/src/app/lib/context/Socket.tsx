@@ -20,7 +20,24 @@ export type ISocketContext = {
 
 const SocketProvider = ({children}) => {
 
-    const socket = io('http://localhost:3100/', {transports: ['websocket']});
+    const socket = io('http://localhost:3100', {transports: ['websocket']});
+
+    socket.on("connect", () => {
+      console.log(socket.connected); // true
+    });
+
+    socket.on("connect_error", (err) => {
+        console.log('connect error');
+        
+      // the reason of the error, for example "xhr poll error"
+      console.log(err.message);
+
+      // some additional description, for example the status code of the initial HTTP response
+      console.log(err.description);
+
+      // some additional context, for example the XMLHttpRequest object
+      console.log(err.context);
+    });
 
     const dispatch = useAppDispatch()
 
@@ -30,6 +47,16 @@ const SocketProvider = ({children}) => {
         socket.on('chat deleted', () => getChats(dispatch))
         socket.on('member added', () => getChats(dispatch))
         socket.on('member left', () => getChats(dispatch))
+        socket.on("connect_error", (err) => {
+            // the reason of the error, for example "xhr poll error"
+            console.log(err.message);
+          
+            // some additional description, for example the status code of the initial HTTP response
+            console.log(err.description);
+          
+            // some additional context, for example the XMLHttpRequest object
+            console.log(err.context);
+          });
     }
 
     const createChat = (userId) => {
@@ -46,6 +73,7 @@ const SocketProvider = ({children}) => {
     }
 
     const subscribeChatMessages = (chatId) => {
+        debugger;
         socket.emit('subscribe chat messages', chatId)
         socket.on('receive message', (message) => 
         // receiveMessage({chatId,message}, dispatch)

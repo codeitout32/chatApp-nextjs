@@ -30,7 +30,7 @@ const Chat = () => {
     prevChatId.current = chatId as string;
     socket.subscribeChatMessages(chatId);
     getChats(dispatch);
-  });
+  }, []);
 
   console.log("chat selected", chat, );
 

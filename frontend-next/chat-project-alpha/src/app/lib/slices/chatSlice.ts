@@ -38,6 +38,8 @@ export const chatsSlice = createSlice({
     },
 
     recieveMessage: (chats, action: PayloadAction<any>) => {
+      console.log('from recieve chat slice', chats);
+
       chats = chats.map(chat => {
         if(chat.id === action.payload.chatId ) {
           chat.messages.push(action.payload.message)
