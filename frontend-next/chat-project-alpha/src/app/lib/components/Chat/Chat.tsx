@@ -23,6 +23,9 @@ const Chat = () => {
   }, [chats]);
 
   useEffect(() => {
+    // debugger;
+    console.log('socket effect', prevChatId.current, chatId);
+    
     if (prevChatId.current == chatId) return;
     if (!chats.find((chat) => chat.id === chatId)) return;
 

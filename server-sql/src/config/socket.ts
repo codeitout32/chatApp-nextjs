@@ -35,9 +35,11 @@ const initializeSocket = (server: any) => {
             socket.join(chatId)
         })
         socket.on('unsubscribe chat messages', (chatId) => {
+            console.log('socket unsubscribe message started', chatId);
+
             socket.leave(chatId)
         })
-        socket.on('send messages', (chatId, message) => {
+        socket.on('send message', (chatId, message) => {
             console.log('socket send message started', message);
             
             socket.to(chatId).emit('receive message', message)

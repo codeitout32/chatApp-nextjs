@@ -23,7 +23,7 @@ const SocketProvider = ({children}) => {
     const socket = io('http://localhost:3100', {transports: ['websocket']});
 
     socket.on("connect", () => {
-      console.log(socket.connected); // true
+      console.log('socket connected', socket.connected, socket.id); // true
     });
 
     socket.on("connect_error", (err) => {
@@ -73,20 +73,25 @@ const SocketProvider = ({children}) => {
     }
 
     const subscribeChatMessages = (chatId) => {
-        debugger;
+        // debugger;
+        console.log('socket subscribe chat messages', chatId)
+
         socket.emit('subscribe chat messages', chatId)
         socket.on('receive message', (message) => 
         // receiveMessage({chatId,message}, dispatch)
-        dispatch(recieveMessage({chatId, message}))
+        {console.log('socket on receive', chatId, message);
+        
+            dispatch(recieveMessage({chatId, message}))}
         )
     }
     const unSubscribeChatMessages = (chatId) => {
-        // socket.emit('subscribe chat messages', chatId)
+        console.log('socket unsubscribe chat messages', chatId)
         socket.off('receive message')
         socket.emit('unsubscribe chat messages', chatId)
     }
 
     const sendMessage = (chatId, message) =>{
+        console.log('socket emitting message', chatId,message)
          socket.emit('send message', chatId, message)
     }
 
