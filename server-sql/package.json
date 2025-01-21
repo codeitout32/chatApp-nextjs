@@ -5,7 +5,7 @@
    "main": "app.ts",
    "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "ts-node --inspect src/index.ts",
+      "start": "node --loader ts-node/esm --inspect  src/index.ts",
       "dev": "nodemon --inspect   src/index.ts",
       "typeorm": "typeorm-ts-node-commonjs"
    },

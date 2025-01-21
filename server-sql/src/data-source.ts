@@ -10,7 +10,7 @@ import { POSTGRES } from "./config/constants"
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: POSTGRES.HOST,
-    port: POSTGRES.PORT,
+    port: Number(POSTGRES.PORT),
     username: POSTGRES.USERNAME,
     password: POSTGRES.PASSWORD,
     database: POSTGRES.DATABASE,
