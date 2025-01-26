@@ -13,7 +13,9 @@ const dispatch = useAppDispatch()
   const chats = useAppSelector(state => state.chats)
 
   useEffect(() => {
-    if(user) {
+    if(user.userData) {
+      console.log('found user', user);
+      
       if(user.userData?.role === 'user') {
       getChats(dispatch)
         socket.subscribeChats(user.userData.id)

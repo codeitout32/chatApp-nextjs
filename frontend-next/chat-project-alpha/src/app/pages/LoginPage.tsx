@@ -17,6 +17,8 @@ import { authServiceApi } from "../lib/services/auth";
 import { signIn } from "../lib/slices/authSlice";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
+import { Button as ShadButton } from "@/components/ui/button"
+
 
 const LoginPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -135,6 +137,12 @@ const LoginPage = () => {
             {isSignUp ? "Sign Up" : "Sign In"}
           </Button>
           Count: {count}
+         
+<div>
+
+ <ShadButton size={'sm'} variant="ghost"   onClick={toggleIsSignUp}>{!isSignUp ? "Sign Up" : "Sign In"}</ShadButton>
+</div>
+
         </Box>
       </Box>
     </Container>

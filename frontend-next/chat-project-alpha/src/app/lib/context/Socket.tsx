@@ -1,6 +1,6 @@
 import { createContext, useMemo } from "react";
 import { io } from "socket.io-client";
-import { useAppDispatch } from "../reduxHooks";
+import { useAppDispatch, useAppSelector } from "../reduxHooks";
 import { getChats } from "../actions/chats";
 import { recieveMessage } from "../slices/chatSlice";
 
@@ -19,6 +19,8 @@ export type ISocketContext = {
  export const SocketContext = createContext<ISocketContext>(null)
 
 const SocketProvider = ({children}) => {
+
+  
 
     const socket = io('http://localhost:3100', {transports: ['websocket']});
 
