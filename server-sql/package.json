@@ -5,9 +5,10 @@
    "main": "app.ts",
    "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node --loader ts-node/esm --inspect  src/index.ts",
+      "start": "node --loader ts-node/esm/transpile-only --inspect  src/index.ts",
       "dev": "nodemon --inspect   src/index.ts",
-      "typeorm": "typeorm-ts-node-commonjs"
+      "typeorm": "typeorm-ts-node-commonjs",
+      "watch:build": "tsc "
    },
    "repository": {
       "type": "git",
@@ -30,10 +31,11 @@
       "serverless-http": "^3.2.0",
       "socket.io": "^4.8.1",
       "typeorm": "0.3.20",
-      "winston": "^3.17.0",
-      "ts-node": "10.9.1"
+      "winston": "^3.17.0"
+      
    },
    "devDependencies": {
+      "ts-node": "10.9.1",
       "@eslint/js": "^9.17.0",
       "@types/bcryptjs": "^2.4.6",
       "@types/express": "^5.0.0",
