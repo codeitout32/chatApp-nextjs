@@ -1,0 +1,10 @@
+# [START app_yaml]
+
+runtime: nodejs18
+
+service: default
+
+env: standard
+instance_class: F1
+
+# [END app_yaml]

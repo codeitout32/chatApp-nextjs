@@ -18,12 +18,15 @@ import { signIn } from "../lib/slices/authSlice";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import { Button as ShadButton } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 
 const LoginPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const dispatch = useAppDispatch();
   const [startSignIn, result] = authServiceApi.useSignInUserMutation();
+  const [startSignUp, resultSignUp] = authServiceApi.useSignUpUserMutation();
   const count = useAppSelector((state) => state.counter.value);
   const redixResult = useAppSelector((state) => state);
   const authStore = useAppSelector(state => state.auth)
@@ -37,6 +40,11 @@ const LoginPage = () => {
     const data = new FormData(event.currentTarget);
     dispatch(increment());
     if (isSignUp) {
+      const email = data.get("email");
+      const password = data.get("password");
+      const firstName = data.get('firstName')
+      const lastName = data.get('lastName')
+      startSignUp({ email, password,lastName,firstName });
     } else {
       const email = data.get("email");
       const password = data.get("password");
@@ -78,24 +86,26 @@ const LoginPage = () => {
             {isSignUp ? (
               <>
                 <Grid size={{ xs: 12, sm: 6 }}>
-                  <TextField
+                <Label>First Name</Label>
+                  <Input
                     autoComplete="given-name"
                     name="firstName"
                     required
-                    fullWidth
+                    // fullWidth
                     id="firstName"
-                    label="First Name"
+                    // label="First Name"
                     autoFocus
                   />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6 }}>
-                  <TextField
+                  <Label>Last Name</Label>
+                  <Input
                     autoComplete="given-name"
                     name="lastName"
                     required
-                    fullWidth
-                    id="firstName"
-                    label="Last Name"
+                    // fullWidth
+                    id="lastName"
+                    // label="Last Name"
                     autoFocus
                     // color='custom'
                   />

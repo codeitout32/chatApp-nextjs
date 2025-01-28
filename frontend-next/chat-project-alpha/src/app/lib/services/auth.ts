@@ -35,6 +35,20 @@ export const authServiceApi = createApi({
         }
       },
     }),
+    signUpUser: builder.mutation<AuthResponse, any>({
+      query: (body) => ({ url: `users/signUp`, method: "POST", body }),
+      onQueryStarted: async (args, options) => {
+        console.log("authresponse", args);
+        // makeStore.
+        try {
+          const res = await options.queryFulfilled;
+          console.log("auth reponse", res.data);
+          options.dispatch(signIn(res.data));
+        } catch (error) {
+          console.log("error", error);
+        }
+      },
+    }),
     // getCurrentUser: builder.query<AuthResponse, any>({
     //   query: (body) => ({})
     // })
