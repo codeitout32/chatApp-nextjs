@@ -12,7 +12,7 @@ type AuthResponse=  {
 export const authServiceApi = createApi({
   reducerPath: "usersApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3100/",
+    baseUrl: process.env.NEXT_PUBLIC_API_URL,
     prepareHeaders: (headers) => {
       headers.set("Access-Control-Allow-Origin", "*");
     },

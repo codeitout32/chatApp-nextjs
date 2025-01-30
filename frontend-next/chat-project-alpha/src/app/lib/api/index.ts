@@ -1,7 +1,10 @@
 import axios from "axios";
 import {jwtDecode } from 'jwt-decode'
 
-const API = axios.create({baseURL: 'http://localhost:3100/'})
+console.log('API_URL',process.env, process.env.NEXT_PUBLIC_API_URL, process.env.NEXT_PUBLIC_PORT );
+
+
+const API = axios.create({baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3100/'})
 
 API.interceptors.request.use((req) => {
     const userData = localStorage.getItem('userData' )

@@ -10,7 +10,7 @@ const Messages = ({ chat }) => {
 
   const messageBoxes = chat?.messages
     ?.slice()
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .sort((a:any, b:any): number => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
     .map((message) => {
       return (
         <Box

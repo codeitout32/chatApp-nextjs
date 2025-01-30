@@ -22,13 +22,13 @@ const SocketProvider = ({children}) => {
 
   
 
-    const socket = io('http://localhost:3100', {transports: ['websocket']});
+    const socket = io('http://34.93.107.165', {transports: ['websocket']});
 
     socket.on("connect", () => {
       console.log('socket connected', socket.connected, socket.id); // true
     });
 
-    socket.on("connect_error", (err) => {
+    socket.on("connect_error", (err: any) => {
         console.log('connect error');
         
       // the reason of the error, for example "xhr poll error"
@@ -49,7 +49,7 @@ const SocketProvider = ({children}) => {
         socket.on('chat deleted', () => getChats(dispatch))
         socket.on('member added', () => getChats(dispatch))
         socket.on('member left', () => getChats(dispatch))
-        socket.on("connect_error", (err) => {
+        socket.on("connect_error", (err: any) => {
             // the reason of the error, for example "xhr poll error"
             console.log(err.message);
           

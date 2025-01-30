@@ -1,3 +1,4 @@
+//@ts-nocheck
 import winston from "winston";
 import util from "util";
 
@@ -40,7 +41,7 @@ const consoleTransport = new transports.Console({
   // handle exceptions thrown in the transports
   handleExceptions: true,
   // output logs in json format
-  json: true,
+  // json: true,
   // format the output
   format: format.combine(
     // include stack trace if available
