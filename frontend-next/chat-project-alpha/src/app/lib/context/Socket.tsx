@@ -22,7 +22,7 @@ const SocketProvider = ({children}) => {
 
   
 
-    const socket = io('http://34.93.107.165', {transports: ['websocket']});
+    const socket = io(process.env.NEXT_PUBLIC_API_URL, {transports: ['websocket']});
 
     socket.on("connect", () => {
       console.log('socket connected', socket.connected, socket.id); // true
