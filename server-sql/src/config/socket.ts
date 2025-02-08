@@ -9,7 +9,8 @@ const initializeSocket = (server: any) => {
         cors: {
             origin: "*"
             // credentials: true
-        }
+        },
+        path: '/server/socket.io/'
     })
 
     io.adapter(createAdapter());
