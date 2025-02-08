@@ -1,6 +1,8 @@
 import http from 'http'
 import { Server } from 'socket.io'
 import { CLIENT_URL } from './constants'
+const { createAdapter } = require("@socket.io/cluster-adapter");
+const { setupWorker } = require("@socket.io/sticky");
 
 const initializeSocket = (server: any) => {
     const io = new Server(server, {
@@ -10,6 +12,10 @@ const initializeSocket = (server: any) => {
         }
     })
 
+    io.adapter(createAdapter());
+
+    setupWorker(io);
+    
     io.on('connection', (socket) => {
 
         console.log('socket started', socket.id);
