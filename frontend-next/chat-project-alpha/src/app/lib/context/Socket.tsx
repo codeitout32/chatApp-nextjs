@@ -22,7 +22,7 @@ const SocketProvider = ({children}) => {
 
   
 
-    const socket = io(process.env.NEXT_PUBLIC_API_URL, {transports: ['websocket']});
+    const socket = io(process.env.NEXT_PUBLIC_API_URL, {transports: ['websocket'],path: '/server/socket.io/'});
 
     socket.on("connect", () => {
       console.log('socket connected', socket.connected, socket.id); // true
@@ -32,7 +32,7 @@ const SocketProvider = ({children}) => {
         console.log('connect error');
         
       // the reason of the error, for example "xhr poll error"
-      console.log(err.message);
+      console.log('err messge', err.message);
 
       // some additional description, for example the status code of the initial HTTP response
       console.log(err.description);
