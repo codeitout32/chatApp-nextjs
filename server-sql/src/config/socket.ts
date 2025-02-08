@@ -7,15 +7,15 @@ const { setupWorker } = require("@socket.io/sticky");
 const initializeSocket = (server: any) => {
     const io = new Server(server, {
         cors: {
-            origin: [CLIENT_URL],
-            credentials: true
+            origin: "*"
+            // credentials: true
         }
     })
 
     io.adapter(createAdapter());
 
     setupWorker(io);
-    
+
     io.on('connection', (socket) => {
 
         console.log('socket started', socket.id);
