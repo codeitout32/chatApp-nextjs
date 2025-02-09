@@ -22,7 +22,7 @@ const SocketProvider = ({children}) => {
 
   
 
-    const socket = io(process.env.NEXT_PUBLIC_API_URL, {transports: ['websocket'],path: '/server/'});
+    const socket = io(process.env.NEXT_PUBLIC_API_URL, {transports: ['websocket'],path: '/server/socket.io/'});
 
     socket.on("connect", () => {
       console.log('socket connected', socket.connected, socket.id); // true
@@ -35,10 +35,10 @@ const SocketProvider = ({children}) => {
       console.log('err messge', err.message);
 
       // some additional description, for example the status code of the initial HTTP response
-      console.log(err.description);
+      console.log('description', err.description);
 
       // some additional context, for example the XMLHttpRequest object
-      console.log(err.context);
+      console.log('context', err.context);
     });
 
     const dispatch = useAppDispatch()

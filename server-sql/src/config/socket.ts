@@ -10,7 +10,7 @@ const initializeSocket = (server: any) => {
             origin: "*"
             // credentials: true
         },
-        path: '/server/'
+        path: '/socket.io/'
     })
 
     io.adapter(createAdapter());
