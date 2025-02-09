@@ -10,7 +10,7 @@ const initializeSocket = (server: any) => {
             origin: "*"
             // credentials: true
         },
-        //path: '/socket.io/',
+        path: '/server/',
         transports: ['websocket', 'polling'],
     })
  console.log('socket file initialized');
