@@ -13,7 +13,8 @@ const initializeSocket = (server: any) => {
         //path: '/socket.io/',
         transports: ['websocket', 'polling'],
     })
-
+ console.log('socket file initialized');
+ 
     // io.adapter(createAdapter());
 
     // setupWorker(io);
@@ -53,6 +54,22 @@ const initializeSocket = (server: any) => {
             socket.to(chatId).emit('receive message', message)
         })
 
+        socket.on("disconnect", (reason, details) => {
+            // the reason of the disconnection, for example "transport error"
+            console.log('disconnected');
+            
+            console.log(reason);
+          
+            // the low-level reason of the disconnection, for example "xhr post error"
+            console.log(details);
+          
+            // some additional description, for example the status code of the HTTP response
+            console.log(details);
+          
+            // some additional context, for example the XMLHttpRequest object
+            console.log(details);
+          });
+
         socket.on("connection_error", (err) => {
             console.log('socket connecton error');
             
@@ -62,6 +79,8 @@ const initializeSocket = (server: any) => {
             console.log(err.context);  // some additional error context
           });
     })
+
+    
 
 
 }

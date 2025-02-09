@@ -23,7 +23,7 @@ const SocketProvider = ({children}) => {
   
 
     const socket = io(process.env.NEXT_PUBLIC_API_URL, {
-        // transports: ['websocket'],
+        transports: ['websocket'],
     path: '/server/socket.io/'
 });
 
@@ -43,6 +43,20 @@ const SocketProvider = ({children}) => {
       // some additional context, for example the XMLHttpRequest object
       console.log('context', err.context);
     });
+
+    socket.on("disconnect", (reason, details) => {
+        // the reason of the disconnection, for example "transport error"
+        console.log('disconnect',reason);
+      
+        // the low-level reason of the disconnection, for example "xhr post error"
+        console.log('disconnect',details);
+      
+        // some additional description, for example the status code of the HTTP response
+        console.log(details);
+      
+        // some additional context, for example the XMLHttpRequest object
+        console.log(details);
+      });
 
     const dispatch = useAppDispatch()
 

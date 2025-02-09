@@ -1,7 +1,7 @@
 import axios from "axios";
 import {jwtDecode } from 'jwt-decode'
 
-console.log('API_URL',process.env, process.env.NEXT_PUBLIC_API_URL, process.env.NEXT_PUBLIC_PORT );
+console.log('API_URL', process.env.NEXT_PUBLIC_API_URL, process.env.NEXT_PUBLIC_PORT );
 
 
 const API = axios.create({baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3100/'})

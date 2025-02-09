@@ -51,7 +51,7 @@ AppDataSource.initialize().then(async () => {
 
     console.log("Loading users from the database...")
     const users = await User.find()
-    console.log("Loaded users: ", users)
+    // console.log("Loaded users: ", users)
 
     console.log("Here you can setup and run express / fastify / any other framework.")
 
