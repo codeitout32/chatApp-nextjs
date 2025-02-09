@@ -14,9 +14,9 @@ const initializeSocket = (server: any) => {
         transports: ['websocket', 'polling'],
     })
 
-    io.adapter(createAdapter());
+    // io.adapter(createAdapter());
 
-    setupWorker(io);
+    // setupWorker(io);
 
     io.on('connection', (socket) => {
 
