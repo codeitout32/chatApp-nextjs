@@ -55,7 +55,7 @@ app.get('/', async (req, res) => {
     res.send('users' + users.map(o => JSON.stringify(o)).join('<br>'))
   })
 
-  httpServer.listen(port, () => {
+  httpServer.listen(port,"0.0.0.0", () => {
     console.log(`Server app listening on port ${port}`)
   })
 
