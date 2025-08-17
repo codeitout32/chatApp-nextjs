@@ -1,0 +1,5 @@
+[build]
+  functions = "netlify/functions"  # This is where your TypeScript functions are located
+
+[dev]
+  functions = "netlify/functions"  # The same as the build function directory

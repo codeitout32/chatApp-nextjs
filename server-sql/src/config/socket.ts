@@ -15,7 +15,7 @@ const initializeSocket = (server: any) => {
     })
  console.log('socket file initialized');
  
-    // io.adapter(createAdapter());
+    //  io.adapter(createAdapter());
 
     // setupWorker(io);
 
